@@ -42,6 +42,10 @@ extension UIColor {
         return UIColor(hexString: "353b48")
     }
     
+    static var subtitleColor : UIColor {
+        return UIColor(hexString: "6a7c8f")
+    }
+    
     static var redColor : UIColor {
         return UIColor(hexString: "e74c3c")
     }

@@ -23,3 +23,11 @@ enum ErrorMessages{
     static let  notFound = "the url you have requested is not exited"
     static let  hostNameNotFound =  "the host you have requested is not existed"
 }
+
+enum Images {
+    static let exclamationmark = "exclamationmark.circle.fill"
+    static let star = "star"
+    static let filledStar = "star.fill"
+    static let halfFilledStar = "star.leadinghalf.fill"
+    static let eye = "eye.fill"
+}
