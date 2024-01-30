@@ -24,7 +24,8 @@ final class MainCoordinator: Coordinator{
     }
     
     func showPhotos(){
-        let moviesScreen = UIMoviesController()
+        let viewModel = MoviesViewModel(service: MovieService())
+        let moviesScreen = UIMoviesController(viewModel:viewModel, coordinator: self)
         pushViewControllerToStack(with:moviesScreen, animated: false, isRoot: true)
     }
     
