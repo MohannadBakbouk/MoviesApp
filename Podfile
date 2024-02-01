@@ -3,6 +3,7 @@ platform :ios, '13.0'
 def appPods
    pod 'Kingfisher','7.10.2'
    pod 'SnapKit','5.6.0'
+  pod 'SkeletonView','1.30.4'
 end
 
 target 'MoviesApp' do

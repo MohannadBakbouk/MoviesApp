@@ -8,6 +8,7 @@
 import UIKit
 import Kingfisher
 import SnapKit
+import SkeletonView
 
 final class UIMovieCell: UICollectionViewCell {
     private var movieImage: UIImageView = {
@@ -16,40 +17,47 @@ final class UIMovieCell: UICollectionViewCell {
         image.kf.indicatorType = .activity
         image.clipsToBounds = true
         image.layer.cornerRadius = 10
-        image.backgroundColor = .yellow
+        image.backgroundColor = .primaryColor
         image.accessibilityIdentifier = "MovieImageView"
+        image.isSkeletonable = true
         return image
      }()
     
     private var nameLabel : UILabel = {
         let label = UILabel()
-        label.text = "bnnnmm"
+        label.text = ""
         label.textColor = .white
+        label.numberOfLines = 2
         label.font = .boldSystemFont(ofSize: 18)
+        label.isSkeletonable = true
         return label
     }()
     
     private var yearLabel : UILabel = {
         let label = UILabel()
-        label.text = "uuuu"
-        label.textColor = .subtitleColor
+        label.text = ""
+        label.numberOfLines  = 1
+        label.font = .boldSystemFont(ofSize: 16)
+        label.textColor = .redColor
         return label
     }()
     
     private var overviewLabel : UILabel = {
         let label = UILabel()
-        label.text = "oover"
-        label.numberOfLines  = 4
+        label.text = ""
+        label.numberOfLines  = 0
         label.textColor = .subtitleColor
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
         return label
     }()
     
     private let ratingView: UIRatingView = {
         let rating = UIRatingView()
+        rating.isSkeletonable = true
         return rating
     }()
     
-    private let voteCountLabel: UILabel = {
+    private let ratingCountLabel: UILabel = {
          let lab = UILabel()
          lab.text = ""
          lab.textColor = .subtitleColor
@@ -58,10 +66,11 @@ final class UIMovieCell: UICollectionViewCell {
     }()
     
     private lazy var ratingStack : UIStackView =  {
-         let stack = UIStackView(arrangedSubviews: [ratingView, voteCountLabel])
+         let stack = UIStackView(arrangedSubviews: [ratingView, ratingCountLabel])
          stack.axis = .horizontal
          stack.spacing = 5
          stack.distribution = .fill
+         stack.isHidden = true
          return stack
     }()
     
@@ -75,7 +84,7 @@ final class UIMovieCell: UICollectionViewCell {
     
     private let popularityCountLabel: UILabel = {
          let lab = UILabel()
-         lab.text = "jj"
+         lab.text = ""
          lab.textColor = .subtitleColor
          lab.font = UIFont.systemFont(ofSize: 16)
          lab.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -88,27 +97,28 @@ final class UIMovieCell: UICollectionViewCell {
          stack.spacing = 5
          stack.distribution = .fill
          stack.alignment = .leading
+         stack.isHidden = true
          return stack
     }()
     
     private lazy var infoStack : UIStackView =  {
         let stack = UIStackView(arrangedSubviews: [nameLabel, yearLabel, overviewLabel, ratingStack, popularityStack])
         stack.axis = .vertical
-        stack.spacing = 10
+        stack.spacing = 8
         stack.distribution = .fill
+        stack.isSkeletonable = true
         return stack
     }()
     
     private lazy var mainStack : UIStackView =  {
-        let stack = UIStackView(arrangedSubviews: [movieImage , infoStack])
+        let stack = UIStackView(arrangedSubviews: [movieImage, infoStack])
         stack.axis = .horizontal
         stack.spacing = 8
         stack.distribution = .fill
-        stack.alignment = .leading
+        stack.isSkeletonable = true
         return stack
     }()
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -119,22 +129,37 @@ final class UIMovieCell: UICollectionViewCell {
     }
     
     func setupViews(){
+        isSkeletonable = true
+        contentView.isSkeletonable = true
         backgroundColor = .secondaryColor
         clipsToBounds = true
         layer.cornerRadius = 12
         contentView.addSubview(mainStack)
+        setupViewsConstraints()
+    }
+    
+    private func setupViewsConstraints(){
         mainStack.snp.makeConstraints {
             $0.top.leading.equalTo(contentView).offset(15)
             $0.bottom.trailing.equalTo(contentView).offset(-15)
         }
         
         movieImage.snp.makeConstraints{
-            $0.width.equalTo(contentView.snp.width).multipliedBy(0.3)
-            $0.height.equalTo(contentView.snp.height).multipliedBy(0.8)
+            $0.width.equalTo(mainStack.snp.width).multipliedBy(0.3)
+            $0.height.equalTo(mainStack.snp.height)
         }
-        
-        movieImage.snp.makeConstraints{
-            $0.width.height.equalTo(20)
-        }
+    }
+    
+    func configure(with model : MovieViewData){
+        nameLabel.text = model.title
+        yearLabel.text = "\(model.year)"
+        overviewLabel.text = model.overview
+        ratingView.setValueOnlyOneStar(value: model.rating)
+        ratingCountLabel.text = "\(model.ratingCount)"
+        popularityCountLabel.text = "\(model.popularity)"
+        ratingStack.isHidden = false
+        popularityStack.isHidden = false
+        guard let url = model.image else { return}
+        movieImage.kf.setImage(with: url)
     }
 }

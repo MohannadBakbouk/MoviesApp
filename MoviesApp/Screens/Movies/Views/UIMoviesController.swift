@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 final class UIMoviesController: UIBaseViewController<MoviesViewModel> {
     let padding : CGFloat = 12
@@ -32,6 +33,13 @@ final class UIMoviesController: UIBaseViewController<MoviesViewModel> {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        bindingViewsToViewModelEvents()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.loadMovies()
     }
     
     private func setupViews(){
@@ -40,17 +48,20 @@ final class UIMoviesController: UIBaseViewController<MoviesViewModel> {
         setupCollection()
         setupViewsConstraints()
         setupCollectionCellSize()
+        SkeletonAppearance.default.multilineLastLineFillPercent = 100
+        SkeletonAppearance.default.gradient = SkeletonGradient(baseColor: .subtitleColor)
     }
     
     private func setupCollection(){
         collectionView.register(UIMovieCell.self, forCellWithReuseIdentifier: String(describing: UIMovieCell.self))
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.isSkeletonable = true
     }
     
     private func setupCollectionCellSize(){
         let width = (UIScreen.main.bounds.width)
-        let hieght = (UIScreen.main.bounds.height) / 4
+        let hieght = (UIScreen.main.bounds.height) / 3.5
         collectionViewLayout.itemSize = CGSize(width: width , height: hieght)
     }
     
@@ -60,27 +71,45 @@ final class UIMoviesController: UIBaseViewController<MoviesViewModel> {
             $0.trailing.bottom.equalTo(view.safeAreaLayoutGuide).offset(-12)
         }
     }
+    
+    private func bindingViewsToViewModelEvents(){
+         bindingMoviesToCollectionView()
+         bindingIsLoadingToAnimator()
+         bindingError()
+    }
+    
+    func stopSkeletonAnimation(){
+        collectionView.stopSkeletonAnimation()
+        collectionView.hideSkeleton(reloadDataAfter: true, transition: .crossDissolve(0.2))
+        collectionView.reloadData()
+    }
 }
 
-extension UIMoviesController: UICollectionViewDataSource, UICollectionViewDelegate , UICollectionViewDelegateFlowLayout{
-    
+extension UIMoviesController: SkeletonCollectionViewDataSource, UICollectionViewDelegate , UICollectionViewDelegateFlowLayout{
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return viewModel.movies.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: UIMovieCell.self), for: indexPath) as! UIMovieCell
+        let model = viewModel.movies.value[indexPath.row]
+        cell.configure(with: model)
         return cell
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        String(describing: UIMovieCell.self)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      //  let selected = viewModel.movies.value[indexPath.row]
+        let selected = viewModel.movies.value[indexPath.row]
        // coordinator?.showDetails(with: selected)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width )
-        let hieght = (collectionView.frame.height) / 4
+        let hieght = (collectionView.frame.height) / 3.5
         return CGSize(width: width , height: hieght)
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 enum ApiInfo {
     static let content = "application/json; charset=utf-8"
     static let baseUrl = "https://api.themoviedb.org/3/"
+    static let imagesUrl = "https://image.tmdb.org/t/p/w500"
     static let key = "5a68758d4762171d54cf110856920623"
     static let format = "json"
 }

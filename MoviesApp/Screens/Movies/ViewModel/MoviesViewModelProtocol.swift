@@ -6,8 +6,9 @@
 //
 
 import Foundation
-
+import  Combine
 
 protocol MoviesViewModelProtocol: BaseViewModelProtocol{
-    
+    var movies: CurrentValueSubject<[MovieViewData], Never>{get}
+    var movieParams: SearchParams {get}
 }

@@ -1,20 +1,24 @@
 PODS:
   - Kingfisher (7.10.2)
+  - SkeletonView (1.30.4)
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
   - Kingfisher (= 7.10.2)
+  - SkeletonView (= 1.30.4)
   - SnapKit (= 5.6.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Kingfisher
+    - SkeletonView
     - SnapKit
 
 SPEC CHECKSUMS:
   Kingfisher: 99edc495d3b7607e6425f0d6f6847b2abd6d716d
+  SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 7a0b08e819e34c50357028a9451b3f4c8e18b9ab
+PODFILE CHECKSUM: 6debe5ebc1440ce18b610ce74862a6f598d196b8
 
 COCOAPODS: 1.11.3
