@@ -53,7 +53,7 @@ final class UIMoviesController: UIBaseViewController<MoviesViewModel> {
     }
     
     private func setupCollection(){
-        collectionView.register(UIMovieCell.self, forCellWithReuseIdentifier: String(describing: UIMovieCell.self))
+        collectionView.register(UIMovieCell.self)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.isSkeletonable = true
@@ -92,8 +92,8 @@ extension UIMoviesController: SkeletonCollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: UIMovieCell.self), for: indexPath) as! UIMovieCell
-        let model = viewModel.movies.value[indexPath.row]
+        guard let cell = collectionView.dequeueReusableCell(with: UIMovieCell.self, for: indexPath) as? UIMovieCell ,
+              let model = viewModel.movies.value[safe:indexPath.row] else {return UICollectionViewCell()}
         cell.configure(with: model)
         return cell
     }
@@ -108,7 +108,7 @@ extension UIMoviesController: SkeletonCollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selected = viewModel.movies.value[indexPath.row]
+        guard let selected = viewModel.movies.value[safe:indexPath.row] else {return}
        // coordinator?.showDetails(with: selected)
     }
     

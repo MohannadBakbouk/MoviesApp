@@ -44,4 +44,12 @@ extension UICollectionView{
     func hideMessage(){
         self.backgroundView = nil
     }
+    
+    func register(_ cellClass: AnyClass){
+        register(cellClass, forCellWithReuseIdentifier: String(describing: cellClass.self))
+    }
+    
+    func dequeueReusableCell(with cellClass: AnyClass, for indexPath: IndexPath) -> UICollectionViewCell?{
+        dequeueReusableCell(withReuseIdentifier: String(describing: cellClass.self), for: indexPath)
+    }
 }
