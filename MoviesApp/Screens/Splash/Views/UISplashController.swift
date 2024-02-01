@@ -60,7 +60,7 @@ final class UISplashController: UIViewController {
     private func routeToNextScreen()  {
         inidicatorView.startAnimating()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {[weak self]  in
-            self?.coordinator?.showPhotos()
+            self?.coordinator?.showMovies()
         }
     }
 }

@@ -109,7 +109,7 @@ extension UIMoviesController: SkeletonCollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selected = viewModel.movies.value[safe:indexPath.row] else {return}
-       // coordinator?.showDetails(with: selected)
+        (coordinator as? MainCoordinator)?.showMovieDetails(with: selected)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

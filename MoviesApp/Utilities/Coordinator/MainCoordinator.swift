@@ -23,10 +23,16 @@ final class MainCoordinator: Coordinator{
         pushViewControllerToStack(with: splash)
     }
     
-    func showPhotos(){
+    func showMovies(){
         let viewModel = MoviesViewModel(service: MovieService())
         let moviesScreen = UIMoviesController(viewModel:viewModel, coordinator: self)
         pushViewControllerToStack(with:moviesScreen, animated: false, isRoot: true)
+    }
+    
+    func showMovieDetails(with info: MovieViewData){
+        let viewModel = MovieDetailsViewModel(service: MovieService(), movieInfo: info)
+        let detailsScreen = UIMovieDetailsController(viewModel:viewModel, coordinator: self)
+        pushViewControllerToStack(with:detailsScreen, animated: true, isRoot: false)
     }
     
     func back() {
