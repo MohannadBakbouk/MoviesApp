@@ -102,6 +102,11 @@ extension UIMoviesController: SkeletonCollectionViewDataSource, UICollectionView
         String(describing: UIMovieCell.self)
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard indexPath.row == (viewModel.movies.value.count - 1) ,!viewModel.isLoadingMore.value else {return}
+        viewModel.reachedBottomTrigger.send()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selected = viewModel.movies.value[indexPath.row]
        // coordinator?.showDetails(with: selected)
