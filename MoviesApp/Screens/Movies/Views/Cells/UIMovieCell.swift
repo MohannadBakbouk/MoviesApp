@@ -145,8 +145,17 @@ final class UIMovieCell: UICollectionViewCell {
         }
         
         movieImage.snp.makeConstraints{
-            $0.width.equalTo(mainStack.snp.width).multipliedBy(0.3)
+            $0.width.equalTo(contentView.snp.width).multipliedBy(0.3)
             $0.height.equalTo(mainStack.snp.height)
+        }
+         
+        yearLabel.snp.makeConstraints{
+            $0.height.equalTo(20)
+        }
+        
+        nameLabel.snp.makeConstraints{
+            $0.height.equalTo(45).priority(.low)
+            $0.height.greaterThanOrEqualTo(20).priority(.high)
         }
     }
     
