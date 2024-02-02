@@ -39,6 +39,7 @@ final class UIMoviesController: UIBaseViewController<MoviesViewModel> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        guard viewModel.movies.value.count == 0 else {return}
         viewModel.loadMovies()
     }
     

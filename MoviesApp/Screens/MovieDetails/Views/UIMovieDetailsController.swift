@@ -35,7 +35,7 @@ final class UIMovieDetailsController: UIBaseViewController<MovieDetailsViewModel
     
     lazy var tableView : UITableView = {
         let table = UITableView()
-        table.backgroundColor = .red
+        table.backgroundColor = .primaryColor
         table.showsVerticalScrollIndicator = false
         table.allowsMultipleSelection = false
         table.isScrollEnabled = false
