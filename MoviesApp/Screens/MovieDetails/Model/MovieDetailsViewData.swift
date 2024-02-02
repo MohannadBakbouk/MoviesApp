@@ -34,6 +34,6 @@ extension MovieDetailsViewData {
          self.category = info.genres.map{$0.name}.joined(separator: " - ")
          self.status = info.status
          self.runtime = "\(info.runtime) Time"
-         self.revenue = "\(info.revenue)"
+         self.revenue = info.revenue.asFormattedCurrency
     }
 }
