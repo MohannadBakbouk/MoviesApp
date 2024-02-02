@@ -54,7 +54,7 @@ final class UIRatingView : UIStackView {
         addArrangedSubview(makeStar(name: starName))
         guard showValue else {return}
         addArrangedSubview(valueLabel)
-        valueLabel.text = "\(value)"
+        valueLabel.text =  String(format: "%.1f", value)
     }
     
     private func makeStar(name : String = Images.filledStar) -> UIImageView {

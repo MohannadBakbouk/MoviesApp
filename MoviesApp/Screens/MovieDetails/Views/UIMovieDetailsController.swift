@@ -163,6 +163,8 @@ extension UIMovieDetailsController: UITableViewDataSource , UITableViewDelegate{
                 return DetailItemViewData(mainInfo.overview, type: .overview)
             case .year:
                 return DetailItemViewData("\(mainInfo.year)", icon: Images.calendar, type: .year)
+            case .rating:
+                return DetailItemViewData(details?.rating, icon: Images.star, type: .rating)
             case .category:
                 return DetailItemViewData(details?.category, icon: Images.tag, type: .category)
             case .runTime:

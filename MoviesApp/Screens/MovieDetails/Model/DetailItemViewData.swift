@@ -12,6 +12,7 @@ enum DetailItem: Int, CaseIterable{
     case overview
     case category
     case year
+    case rating
     case runTime
     case status
     case revenue

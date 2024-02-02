@@ -31,6 +31,7 @@ class UIBaseDetailItemCell: UITableViewCell {
         let img = UIImageView(image: nil)
         img.isHidden = true
         img.tintColor = .redColor
+        img.contentMode = .scaleAspectFit
         return img
      }()
 
@@ -93,7 +94,10 @@ class UIBaseDetailItemCell: UITableViewCell {
             $0.top.leading.equalTo(containerView).offset(contentPadding)
             $0.bottom.trailing.equalTo(containerView).offset(-contentPadding)
         }
-        iconImage.snp.makeConstraints{$0.size.equalTo(20)}
+        iconImage.snp.makeConstraints{
+            $0.height.equalTo(20)
+            $0.width.equalTo(23)
+        }
     }
     
     func configure(with model: DetailItemViewData){
