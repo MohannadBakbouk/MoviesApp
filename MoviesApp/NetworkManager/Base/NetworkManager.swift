@@ -18,7 +18,6 @@ final class NetworkManager: NetworkManagerProtocol {
         request.httpMethod = endpoint.method.rawValue
         request.addValue(ApiInfo.content, forHTTPHeaderField: "Content-Type")
         request.httpBody = endpoint.method != .Get ? endpoint.params.asData : nil
-        print(url.absoluteString)
         return call(request: request)
     }
     

@@ -53,7 +53,4 @@ extension UIColor {
     static var detailsColor : UIColor {
         return UIColor(hexString: "ecf0f1")
     }
-    
-    
-    
 }
