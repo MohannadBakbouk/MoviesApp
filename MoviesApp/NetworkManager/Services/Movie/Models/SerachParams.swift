@@ -26,7 +26,7 @@ struct SearchParams {
 extension SearchParams {
     var  asJson: JSON {
         var info: JSON = ["page" : page , "language" : lang]
-        _ =  query != nil ?  info["without_keywords"] =  query! : ()
+        _ =  query != nil ?  info["with_keywords"] =  query! : ()
         return info
     }
 }
