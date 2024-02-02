@@ -26,16 +26,15 @@ final class MovieDetailsViewModel: MovieDetailsViewModelProtocol{
     }
     
     func loadMovieDetails(){
-           isLoading.send(true)
+        isLoading.send(true)
         service.getMovieDetails(id: movieInfo.id)
-           .delay(for: 3, scheduler: RunLoop.main)
-           .sink(receiveCompletion: {[weak self] completed in
-               guard case .failure(let error) = completed else {return}
-                self?.isLoading.send(false)
-                self?.error.send(ErrorDataView(with: error))
-           }, receiveValue: {[weak self] data in
-               self?.isLoading.send(false)
-               self?.details.send(MovieDetailsViewData(info: data))
-           }).store(in: &cancellables)
+       .sink(receiveCompletion: {[weak self] completed in
+           guard case .failure(let error) = completed else {return}
+            self?.isLoading.send(false)
+            self?.error.send(ErrorDataView(with: error))
+       }, receiveValue: {[weak self] data in
+           self?.isLoading.send(false)
+           self?.details.send(MovieDetailsViewData(info: data))
+       }).store(in: &cancellables)
     }
 }

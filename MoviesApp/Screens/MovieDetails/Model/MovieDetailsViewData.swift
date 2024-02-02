@@ -31,9 +31,9 @@ extension MovieDetailsViewData {
          self.ratingCount = " (\(info.voteCount)) "
          self.popularity = String(format: "%.0f", floor(info.popularity))
          self.image = "\(ApiInfo.imagesUrl)\(info.posterPath)".asURL()
-         self.category = info.genres.map{$0.name}.joined(separator: ",")
+         self.category = info.genres.map{$0.name}.joined(separator: " - ")
          self.status = info.status
-         self.runtime = "\(info.runtime)"
+         self.runtime = "\(info.runtime) Time"
          self.revenue = "\(info.revenue)"
     }
 }

@@ -31,4 +31,10 @@ enum Images {
     static let filledStar = "star.fill"
     static let halfFilledStar = "star.leadinghalf.fill"
     static let eye = "eye.fill"
+    static let calendar = "calendar"
+    static let dollar = "dollarsign.circle"
+    static let bars = "line.horizontal.3.decrease.circle"
+    static let camera = "camera.rotate"
+    static let tag = "tag"
+    static let back = "arrow.left.circle"
 }

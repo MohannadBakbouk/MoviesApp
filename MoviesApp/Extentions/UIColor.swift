@@ -50,4 +50,10 @@ extension UIColor {
         return UIColor(hexString: "e74c3c")
     }
     
+    static var detailsColor : UIColor {
+        return UIColor(hexString: "ecf0f1")
+    }
+    
+    
+    
 }

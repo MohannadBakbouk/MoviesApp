@@ -32,6 +32,12 @@ enum NetworkError: Int,  Error {
     
     static func convert(_ error : Error?) -> NetworkError{
         guard error as? NetworkError == nil else {return error as! NetworkError}
+        
+        guard !(error is DecodingError) else {
+            print(error as? DecodingError)
+            return NetworkError.parse
+        }
+        
         guard let mapped = error as? URLError else {
             return .errorOccured
             

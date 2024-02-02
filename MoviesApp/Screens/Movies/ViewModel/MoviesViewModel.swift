@@ -34,7 +34,7 @@ final class MoviesViewModel: MoviesViewModelProtocol{
            _ = !isLoadingMore.value ? isLoading.send(true) : ()
            let delay: RunLoop.SchedulerTimeType.Stride = !isLoadingMore.value ? 3 : 0 // this delaytion  would allow the animation appear on the first time
            service.discoverMovies(info: movieParams)
-           .delay(for: delay, scheduler: RunLoop.main)
+           .delay(for: 0, scheduler: RunLoop.main)
            .sink(receiveCompletion: {[weak self] completed in
                guard case .failure(let error) = completed else {return}
                 self?.isLoading.send(false)
