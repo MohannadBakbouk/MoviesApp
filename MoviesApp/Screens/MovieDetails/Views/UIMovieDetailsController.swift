@@ -82,8 +82,7 @@ final class UIMovieDetailsController: UIBaseViewController<MovieDetailsViewModel
     }
     
     private func setupTableview(){
-        tableView.register(UIBaseDetailItemCell.self, forCellReuseIdentifier: String(describing: UIBaseDetailItemCell.self))
-        tableView.register(UITinyDetailItemCell.self, forCellReuseIdentifier: String(describing: UITinyDetailItemCell.self))
+        tableView.register(mutipleCells: [UIBaseDetailItemCell.self, UITinyDetailItemCell.self])
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -148,30 +147,22 @@ extension UIMovieDetailsController: UITableViewDataSource , UITableViewDelegate{
     }
     
     func makeCellFor(item: DetailItem, at index: IndexPath) -> UITableViewCell{
-        var cell: UIBaseDetailItemCell?
-        if item == .title || item == .overview {
-            cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UIBaseDetailItemCell.self), for: index) as? UIBaseDetailItemCell
-        }
-        else {
-            cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITinyDetailItemCell.self), for: index) as? UITinyDetailItemCell
-        }
-        
+        let cellClass =  (item == .title || item == .overview) ? UIBaseDetailItemCell.self : UITinyDetailItemCell.self
+        let cell = tableView.dequeueReusableCell(with: cellClass, for: index) as? UIBaseDetailItemCell
         cell?.setStyle(with: makeStyleItemFor(item: item))
         cell?.configure(with: makeDataModelFor(item: item))
-        
         return cell ?? UITableViewCell()
     }
     
     func makeDataModelFor(item: DetailItem) -> DetailItemViewData{
-        let mainInfo = viewModel.movieInfo
-        let details =  viewModel.details.value
+        let mainInfo = viewModel.movieInfo, details =  viewModel.details.value
         switch item {
             case .title:
                 return DetailItemViewData(mainInfo.title, type: .title)
             case .overview:
                 return DetailItemViewData(mainInfo.overview, type: .overview)
             case .year:
-                return DetailItemViewData(mainInfo.year.description, icon: Images.calendar, type: .year)
+                return DetailItemViewData("\(mainInfo.year)", icon: Images.calendar, type: .year)
             case .category:
                 return DetailItemViewData(details?.category, icon: Images.tag, type: .category)
             case .runTime:
