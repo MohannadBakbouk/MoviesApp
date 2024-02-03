@@ -151,6 +151,7 @@ extension UIMovieDetailsController: UITableViewDataSource , UITableViewDelegate{
         let cell = tableView.dequeueReusableCell(with: cellClass, for: index) as? UIBaseDetailItemCell
         cell?.setStyle(with: makeStyleItemFor(item: item))
         cell?.configure(with: makeDataModelFor(item: item))
+        cell?.accessibilityIdentifier = "\(String(describing: item))_cell"
         return cell ?? UITableViewCell()
     }
     
