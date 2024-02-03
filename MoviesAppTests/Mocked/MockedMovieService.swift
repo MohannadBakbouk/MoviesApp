@@ -13,7 +13,7 @@ final class MockedMovieService: MovieServiceProtocol{
     
     func discoverMovies(info: SearchParams) -> AnyPublisher<DiscoverMoviesResponse, NetworkError> {
         let bundle = Bundle(for: MockedMovieService.self)
-        let resourceName = "MoviesPage1"
+        let resourceName = "MoviesPage\(info.page)"
         guard let url = bundle.url(forResource: resourceName, withExtension: "json"),
               let data =  try? Data(contentsOf: url),
               let response = try? JSONDecoder().decode(DiscoverMoviesResponse.self, from: data) else {
@@ -31,5 +31,18 @@ final class MockedMovieService: MovieServiceProtocol{
             return AnyPublisher(Fail<MovieDetailsResponse, NetworkError>(error: .notFound))
         }
         return Result.Publisher(response).eraseToAnyPublisher()
+    }
+}
+
+
+
+extension MockedMovieService {
+    static var dummyMovie: MovieViewData{
+        let bundle = Bundle(for: MockedMovieService.self)
+        let resourceName = "MoviesPage1"
+        let url = bundle.url(forResource: resourceName, withExtension: "json")!
+        let data =  try! Data(contentsOf: url)
+        let response = try! JSONDecoder().decode(DiscoverMoviesResponse.self, from: data)
+        return MovieViewData(info: response.results.first!)
     }
 }

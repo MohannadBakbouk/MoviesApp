@@ -10,4 +10,5 @@ import  Combine
 
 protocol MovieDetailsViewModelProtocol: BaseViewModelProtocol{
     var details: CurrentValueSubject<MovieDetailsViewData?, Never>{get}
+    func loadMovieDetails()
 }

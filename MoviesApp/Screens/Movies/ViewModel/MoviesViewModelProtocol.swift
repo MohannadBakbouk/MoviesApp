@@ -13,4 +13,5 @@ protocol MoviesViewModelProtocol: BaseViewModelProtocol{
     var reachedBottomTrigger: PassthroughSubject<Void, Never> {get}
     var isLoadingMore: CurrentValueSubject<Bool, Never> { get }
     var movieParams: SearchParams {get}
+    func loadMovies()
 }
